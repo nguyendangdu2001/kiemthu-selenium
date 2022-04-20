@@ -15,8 +15,8 @@ const waitPageLoad = async () => {
 };
 describe("create new customer test", () => {
   before(async () => {
-    loginPage.open();
-    loginPage.login("mngr398778", "pEmynyh");
+    await loginPage.open();
+    await loginPage.login("mngr398778", "pEmynyh");
     await driver.wait(function () {
       return driver
         .executeScript("return document.readyState")
@@ -25,13 +25,16 @@ describe("create new customer test", () => {
         });
     });
   });
+  after(() => {
+    // driver.close();
+  });
   beforeEach(() => {});
   // after(async () => {
   //   await driver.quit();
   // });
   it("Success test", async () => {
-    newCustomerPage.open();
-    newCustomerPage.create({
+    await newCustomerPage.open();
+    await newCustomerPage.create({
       name: "aaaaa",
       gender: "MALE",
       dob: "04-12-2001",

@@ -1,4 +1,5 @@
-import { Builder, By, Key } from "selenium-webdriver";
+import { Builder, By, Key, until } from "selenium-webdriver";
+import { waitPageLoad } from "../helper/waitingPageLoad.js";
 import BasePage from "./basePage.js";
 
 class CustomerPage extends BasePage {
@@ -35,23 +36,36 @@ class CustomerPage extends BasePage {
   get emailidInput() {
     return this.driver.findElement(By.name("emailid"));
   }
-  create(data) {
+  async create(data) {
     // const uidInput = await this.driver.findElement(By.name("uid"));
     // const passwordInput = await this.driver.findElement(By.name("password"));
-    this.nameInput.sendKeys(data?.name);
-    data?.gender === "MALE" ? this.maleInut.click() : this.femaleInut.click();
-    this.dobInput.sendKeys(data?.dob);
-    this.addrInput.sendKeys(data?.addr);
-    this.cityInput.sendKeys(data?.city);
-    this.stateInput.sendKeys(data?.state);
-    this.pinnoInput.sendKeys(data?.pin);
-    this.telephonenoInput.sendKeys(data?.telephone);
-    this.emailidInput.sendKeys(data?.emailId);
-    this.passwordInput.sendKeys(data?.password);
-    this.passwordInput.sendKeys(Key.RETURN);
+    await this.nameInput.sendKeys(data?.name);
+    data?.gender === "MALE"
+      ? await this.maleInut.click()
+      : await this.femaleInut.click();
+    await this.dobInput.sendKeys(data?.dob);
+    await this.addrInput.sendKeys(data?.addr);
+    await this.cityInput.sendKeys(data?.city);
+    await this.stateInput.sendKeys(data?.state);
+    await this.pinnoInput.sendKeys(data?.pin);
+    await this.telephonenoInput.sendKeys(data?.telephone);
+    await this.emailidInput.sendKeys(data?.emailId);
+    await this.passwordInput.sendKeys(data?.password);
+    await this.passwordInput.sendKeys(Key.RETURN);
   }
-  open() {
-    super.open("https://www.demo.guru99.com/V4/manager/addcustomerpage.php");
+  async open() {
+    await super.open(
+      "https://www.demo.guru99.com/V4/manager/addcustomerpage.php"
+    );
+  }
+  async getCustomerId() {
+    await waitPageLoad();
+    const div = await this.driver.findElement(
+      By.xpath(
+        "/html[1]/body[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[4]/td[2]"
+      )
+    );
+    return await div.getText();
   }
 }
 const newCustomerPage = new CustomerPage();

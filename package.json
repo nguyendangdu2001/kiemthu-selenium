@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 60000"
+    "test": "mocha --timeout 60000 --require ./test/hooks.mjs"
   },
   "author": "Meow",
   "license": "MIT",

@@ -8,15 +8,15 @@ class LoginPage extends BasePage {
   get passwordInput() {
     return this.driver.findElement(By.name("password"));
   }
-  login(userId, password) {
+  async login(userId, password) {
     // const uidInput = await this.driver.findElement(By.name("uid"));
     // const passwordInput = await this.driver.findElement(By.name("password"));
-    this.uidInput.sendKeys(userId);
-    this.passwordInput.sendKeys(password);
-    this.passwordInput.sendKeys(Key.RETURN);
+    await this.uidInput.sendKeys(userId);
+    await this.passwordInput.sendKeys(password);
+    await this.passwordInput.sendKeys(Key.RETURN);
   }
-  open() {
-    super.open("https://www.demo.guru99.com/V4/");
+  async open() {
+    await super.open("https://www.demo.guru99.com/V4/");
   }
 }
 const loginPage = new LoginPage();
